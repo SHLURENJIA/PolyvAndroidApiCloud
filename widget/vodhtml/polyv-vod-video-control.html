@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,user-scalable=0">
+    <title>APICloud</title>
+    <!--<link rel="stylesheet" type="text/css" href="../css/api.css" />-->
+    <style type="text/css">
+        #header {
+            text-align: center;
+            background-color: #81a9c3;
+            color: #fff;
+            width: 100%;
+        }
+    </style>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript">
+        var polyvVideoModule = null;
+        apiready = function() {
+            polyvVideoModule = api.require('polyvVideoModule');
+        }
+
+        function showVideo() {
+            // 设置自己的vid才能播放
+            var param = {
+                rect: {
+                    x: 0,
+                    y: 0,
+                    w: 0,
+                    h: 0
+                },
+                fixedOn: 'polyv-video',
+                fixed: true,
+                autoPlay: true,
+                seekType: 1,
+                vid: "2273463aee984bed6505c1855746f502_2"
+            };
+            polyvVideoModule.open(param, function(ret, err) {
+                if (err.msg != null) {
+                    alert(err.msg);
+                } else {
+                    console.log('polyv-vod-video eventType = ' + ret.eventType);
+                    if (ret.eventType == "start") {
+                        updateProgress();
+                    }
+                }
+            });
+        }
+
+        function updateProgress() {
+            polyvVideoModule.isPlaying(function(ret, err) {
+                if (ret.isPlaying) {
+                    polyvVideoModule.getCurrentPosition(function(ret, err) {
+                        var currentPosition = ret.currentPosition;
+                        polyvVideoModule.getDuration(function(ret, err) {
+                            var duration = ret.duration;
+                            $api.byId("progress").innerText = currentPosition + "/" + duration;
+                            setTimeout("updateProgress()", 1000);
+                        });
+                    });
+                }
+            });
+        }
+
+        function closeView() {
+            polyvVideoModule.close();
+        }
+
+        function setVid() {
+            polyvVideoModule.setVid({
+                vid: "c538856dde517f1cbc918e14f6f65f41_c"
+            });
+        }
+
+        function setPath() {
+            polyvVideoModule.setPath({
+                path: "http://mpv.videocc.net/2273463aee/8/2273463aeee7193b5c7c80c7ac9d6bc8_1.mp4"
+            });
+        }
+
+        function show() {
+            polyvVideoModule.show();
+        }
+
+        function hide() {
+            polyvVideoModule.hide();
+        }
+
+        function fullScreen() {
+            api.setScreenOrientation({
+                orientation: 'landscape_left'
+            });
+
+            polyvVideoModule.fullScreen();
+        }
+
+        function cancelFullScreen() {
+            api.setScreenOrientation({
+                orientation: 'portrait_up'
+            });
+
+            polyvVideoModule.cancelFullScreen();
+        }
+
+        function stop() {
+            polyvVideoModule.stop();
+        }
+
+        function start() {
+            polyvVideoModule.start();
+        }
+
+        function pause() {
+            polyvVideoModule.pause();
+        }
+
+        function getDuration() {
+            polyvVideoModule.getDuration(null, function(ret, err) {
+                alert(ret.duration);
+            });
+        }
+
+        function getCurrentPosition() {
+            polyvVideoModule.getCurrentPosition(null, function(ret, err) {
+                alert(ret.currentPosition);
+            });
+        }
+
+        function seekTo() {
+            polyvVideoModule.seekTo({
+                seconds: 51
+            });
+        }
+
+        function isPlaying() {
+            polyvVideoModule.isPlaying(null, function(ret, err) {
+                alert(ret.isPlaying);
+            });
+        }
+
+        function getBufferPercentage() {
+            polyvVideoModule.getBufferPercentage(null, function(ret, err) {
+                alert(ret.bufferPercentage);
+            });
+        }
+
+        var currentSpeed = 1.0;
+
+        function setSpeed() {
+            currentSpeed = currentSpeed + 0.5;
+            if (currentSpeed > 2) {
+                currentSpeed = 0.5;
+            }
+
+            polyvVideoModule.setSpeed({
+                speed: currentSpeed
+            });
+        }
+
+        function getSpeed() {
+            polyvVideoModule.getSpeed(null, function(ret, err) {
+                alert(ret.speed);
+            });
+        }
+
+        function showMarquee() {
+            polyvVideoModule.showMarquee({
+                marquee: "保利威视是一个第三方视频技术服务商，提供视频云计算服务平台，为教育行业等提供视频解决方案，隶属于广州易方信息科技有限公司，实现网络视频跨终端播放，是一家拥有自主知识产权的高新技术企业。",
+                duration: 10
+            });
+        }
+
+        function hideMarquee() {
+            polyvVideoModule.hideMarquee();
+        }
+
+        var currentBitrate = 0;
+
+        function changeBitrate() {
+            currentBitrate++;
+            if (currentBitrate > 3) {
+                currentBitrate = 1;
+            }
+
+            polyvVideoModule.changeBitrate({
+                bitrate: currentBitrate
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <!-- 先点击加载视频， -->
+    <a href="javascript:void(0);" onclick="showVideo()">加载视频</a>
+    <a href="javascript:void(0);" onclick="start()">开始</a>
+    <a href="javascript:void(0);" onclick="pause()">暂停</a>
+    <a href="javascript:void(0);" onclick="fullScreen()">横屏</a>
+    <a href="javascript:void(0);" onclick="cancelFullScreen()">竖屏</a>
+    <a href="javascript:void(0);" onclick="closeView()">关闭</a>
+    <a href="javascript:void(0);" onclick="setVid()">切换视频</a>
+    <a href="javascript:void(0);" onclick="setPath()">本地path</a>
+    <a href="javascript:void(0);" onclick="show()">显示</a>
+    <a href="javascript:void(0);" onclick="hide()">隐藏</a>
+    <a href="javascript:void(0);" onclick="stop()">停止</a>
+    <a href="javascript:void(0);" onclick="seekTo()">跳转</a>
+    <a href="javascript:void(0);" onclick="isPlaying()">是否播放中</a>
+    <a href="javascript:void(0);" onclick="getBufferPercentage()">缓存进度</a>
+    <a href="javascript:void(0);" onclick="setSpeed()">设置播放速度</a>
+    <a href="javascript:void(0);" onclick="getSpeed()">获取播放速度</a>
+    <a href="javascript:void(0);" onclick="showMarquee()">改变跑马灯</a>
+    <a href="javascript:void(0);" onclick="hideMarquee()">隐藏跑马灯</a>
+    <a href="javascript:void(0);" onclick="changeBitrate()">切换码率</a>
+    <br/>
+    <label id="progress" style="color: #555555">0%</label>
+</body>
+
+</html>

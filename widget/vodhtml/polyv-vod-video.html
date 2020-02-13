@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,user-scalable=0">
+    <title>APICloud</title>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript">
+    /*
+    //测试手势代码
+    var polyvVideoModule = null;
+    apiready = function() {
+        polyvVideoModule = api.require('polyvVideoModule');
+
+        // 设置自己的vid才能播放
+        var param = {
+            rect: {
+                x: 0,
+                y: 0,
+                w: 0,
+                h: 0
+            },
+            fixedOn: 'polyv-video',
+            fixed: true,
+            autoPlay: true,
+            vid: "2273463aee984bed6505c1855746f502_2"
+        };
+        polyvVideoModule.open(param, function(ret, err) {
+            if (err.msg != null) {
+                alert(err.msg);
+            } else {
+                if (ret.eventType == "start") {
+
+                }
+            }
+        });
+
+        polyvVideoModule.addEventListener({
+            name: "leftUp"
+        }, function(ret, err) {
+            console.log('PolyvVideoGesture LeftUp ' + ret.start + ' ' + ret.end + ' brightness ' + ret.brightness);
+            polyvVideoModule.getBrightness(null, function(ret, err) {
+                console.log('PolyvVideoGesture brightness ' + ret.brightness);
+                var brightness = ret.brightness + 5;
+                if (brightness > 100) {
+                    brightness = 100;
+                }
+
+                polyvVideoModule.setBrightness({
+                    brightness: brightness
+                });
+            });
+        });
+        polyvVideoModule.addEventListener({
+            name: "leftDown"
+        }, function(ret, err) {
+            console.log('PolyvVideoGesture LeftDown ' + ret.start + ' ' + ret.end);
+            polyvVideoModule.getBrightness(null, function(ret, err) {
+                console.log('PolyvVideoGesture brightness ' + ret.brightness);
+                var brightness = ret.brightness - 5;
+                if (brightness < 0) {
+                    brightness = 0;
+                }
+
+                polyvVideoModule.setBrightness({
+                    brightness: brightness
+                });
+            });
+        });
+        polyvVideoModule.addEventListener({
+            name: "rightUp"
+        }, function(ret, err) {
+            console.log('PolyvVideoGesture RightUp ' + ret.start + ' ' + ret.end);
+            polyvVideoModule.getVolume(null, function(ret, err) {
+                console.log('PolyvVideoGesture volume ' + ret.volume);
+                // 加减单位最小为10，否则无效果
+                var volume = ret.volume + 0.1;
+                if (volume > 100) {
+                    volume = 100;
+                }
+
+                polyvVideoModule.setVolume({
+                    volume: volume
+                });
+            });
+        });
+        polyvVideoModule.addEventListener({
+            name: "rightDown"
+        }, function(ret, err) {
+            console.log('PolyvVideoGesture RightDown ' + ret.start + ' ' + ret.end);
+            polyvVideoModule.getVolume(null, function(ret, err) {
+                console.log('PolyvVideoGesture volume ' + ret.volume);
+                // 加减单位最小为10，否则无效果
+                var volume = ret.volume - 0.1;
+                if (volume < 0) {
+                    volume = 0;
+                }
+
+                polyvVideoModule.setVolume({
+                    volume: volume
+                });
+            });
+        });
+        polyvVideoModule.addEventListener({
+            name: "swipeLeft"
+        }, function(ret, err) {
+            // 左滑事件
+            console.log('PolyvVideoGesture SwipeLeft ' + ret.start + ' ' + ret.end);
+            if (ret.end) {
+                polyvVideoModule.rewind({
+                    seconds: 20
+                });
+            }
+        });
+        polyvVideoModule.addEventListener({
+            name: "swipeRight"
+        }, function(ret, err) {
+            // 右滑事件
+            console.log('PolyvVideoGesture SwipeRight ' + ret.start + ' ' + ret.end);
+            if (ret.end) {
+                polyvVideoModule.forward({
+                    seconds: 20
+                });
+            }
+        });
+        polyvVideoModule.addEventListener({
+            name: "click"
+        }, function(ret, err) {
+            console.log('PolyvVideoGesture click');
+            polyvVideoModule.fullScreen();
+            api.setScreenOrientation({
+                orientation:'auto_landscape'
+            });
+        });
+    }
+
+    function removeVideoEventListener() {
+        polyvVideoModule.removeEventListener({
+            name: 'leftUp'
+        });
+        polyvVideoModule.removeEventListener({
+            name: 'leftDown'
+        });
+        polyvVideoModule.removeEventListener({
+            name: 'rightUp'
+        });
+        polyvVideoModule.removeEventListener({
+            name: 'rightDown'
+        });
+        polyvVideoModule.removeEventListener({
+            name: 'swipeLeft'
+        });
+        polyvVideoModule.removeEventListener({
+            name: 'swipeRight'
+        });
+        polyvVideoModule.removeEventListener({
+            name: 'click'
+        });
+    }
+    */
+</script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,user-scalable=0">
+    <title>APICloud</title>
+    <script type="text/javascript">
+        var polyvVideoModule = null;
+        apiready = function() {
+            polyvUploadModule = api.require('polyvUploadModule');
+        }
+
+        function upload() {
+            var param = {
+                saveDir: "/storage/sdcard0/polyvdownload",
+                fileName: "test.mp4",
+                uploadTitle: "apiCloud测试"
+            };
+            polyvUploadModule.upload(param, function(ret, err) {
+                if (ret == null) {
+                    alert(err.msg);
+                } else {
+                    if (ret.type == polyvUploadModule.uploadSuccessCode) {
+                        document.getElementById("proressText").value = "上传成功";
+                    } else if (ret.type == polyvUploadModule.uploadProgressCode) {
+                        document.getElementById("proressText").value = ret.progress + "/" + ret.total;
+                    }
+                }
+            });
+
+            document.getElementById("proressText").value = "等待上传";
+        }
+    </script>
+</head>
+
+<body>
+    <input type="text" id="proressText"></input><br/>
+    <input type="button" onclick="upload()" value="上传" /><br/>
+</body>
+
+</html>
