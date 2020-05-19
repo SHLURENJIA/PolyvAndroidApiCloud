@@ -32,9 +32,10 @@
                 },
                 fixedOn: 'polyv-video',
                 fixed: true,
-                autoPlay: true,
+                autoPlay:true,
+					      level:1,
                 seekType: 1,
-                vid: "bb9a14f1cae7139a531266630234faf7_b"
+                vid: "2273463aee8953d32afe9c15a9d41080_2"
             };
             polyvVideoModule.open(param, function(ret, err) {
                 if (err.msg != null) {
@@ -69,13 +70,14 @@
 
         function setVid() {
             polyvVideoModule.setVid({
-                vid: "bb9a14f1cae7139a531266630234faf7_b"
+                vid: "2273463aee027300ec391928e431fe8b_2",
+                level:0
             });
         }
 
         function setPath() {
             polyvVideoModule.setPath({
-                path: "http://mpv.videocc.net/2273463aee/8/2273463aeee7193b5c7c80c7ac9d6bc8_1.mp4"
+                path: "/storage/emulated/0/DCIM/Camera/VID_20200426_100436.mp4"
             });
         }
 
@@ -178,18 +180,20 @@
             polyvVideoModule.hideMarquee();
         }
 
-        var currentBitrate = 0;
 
-        function changeBitrate() {
-            currentBitrate++;
-            if (currentBitrate > 3) {
-                currentBitrate = 1;
-            }
-
-            polyvVideoModule.changeBitrate({
-                bitrate: currentBitrate
+        function getCurLevel() {
+            polyvVideoModule.getCurrentLevel(function(ret, err){
+                alert(ret.currentLevel)
             });
         }
+
+      var le = 1;
+      function changeLevel() {
+          if(le > 3){
+            le = 0;
+          }
+          polyvVideoModule.changeLevel({level:le++});
+      }
     </script>
 </head>
 
@@ -213,7 +217,9 @@
     <a href="javascript:void(0);" onclick="getSpeed()">获取播放速度</a>
     <a href="javascript:void(0);" onclick="showMarquee()">改变跑马灯</a>
     <a href="javascript:void(0);" onclick="hideMarquee()">隐藏跑马灯</a>
-    <a href="javascript:void(0);" onclick="changeBitrate()">切换码率</a>
+    <a href="javascript:void(0);" onclick="hideMarquee()">隐藏跑马灯</a>
+    <a href="javascript:void(0);" onclick="getCurLevel()">获取当前码率</a>
+    <a href="javascript:void(0);" onclick="changeLevel()">改变码率</a>
     <br/>
     <label id="progress" style="color: #555555">0%</label>
 </body>

@@ -9,7 +9,7 @@
 		apiready = function(){
 			polyvVideoInfoModule = api.require('polyvVideoInfoModule');
 	    }
-		
+
 		function getDuration() {
 			var vid =  document.getElementById("vid").value;
 			polyvVideoInfoModule.getDuration({vid:vid}, function(ret, err) {
@@ -20,7 +20,7 @@
 				}
 			});
 		}
-		
+
 		function getFileSize() {
 			var vid =  document.getElementById("vid").value;
 			var level = document.getElementById("level").value;
@@ -32,6 +32,17 @@
 				}
 			});
 		}
+
+    function getLevelNum() {
+  var vid =  document.getElementById("vid").value;
+  polyvVideoInfoModule.getLevelNum({vid:vid}, function(ret, err) {
+    if (err != null && err.msg) {
+      alert(err.msg);
+    } else if (ret != null) {
+      alert(ret.levelNum);
+    }
+  });
+}
 	</script>
 </head>
 <body>
@@ -41,5 +52,7 @@
 	<input type="text" id="level" style="width:30%" value="1"/><br/>
 	<input type="button" onclick="getDuration()" value="getDuration()"/><br/>
 	<input type="button" onclick="getFileSize()" value="getFileSize()"/><br/>
+  <input type="button" onclick="getLevelNum()" value="getLevelNum()"/><br/>
+
 </body>
 </html>
