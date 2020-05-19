@@ -38,6 +38,17 @@
                 }
             });
         }
+
+        function getLevelNum() {
+          var vid =  document.getElementById("vid").value;
+          polyvVideoInfoModule.getLevelNum({vid:vid}, function(ret, err) {
+          if (err != null && err.msg) {
+            alert(err.msg);
+          } else if (ret != null) {
+            alert(ret.levelNum);
+          }
+        });
+      }
     </script>
 </head>
 
@@ -48,6 +59,7 @@
     <input type="text" id="level" style="width:30%" value="1" /><br/>
     <input type="button" onclick="getDuration()" value="getDuration()" /><br/>
     <input type="button" onclick="getFileSize()" value="getFileSize()" /><br/>
+    <input type="button" onclick="getLevelNum()" value="getLevelNum()"/><br/>
 </body>
 
 </html>
