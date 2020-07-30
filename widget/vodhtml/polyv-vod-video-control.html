@@ -36,7 +36,8 @@
                 disableScreenCAP:false,
 					      level:1,
                 seekType: 1,
-                vid: "d06ae002cbb2cad79c0e38bf5583b210_d"
+                disableScreenCAP:true,
+                vid: "2273463aee8953d32afe9c15a9d41080_2"
             };
             polyvVideoModule.open(param, function(ret, err) {
                 if (err.msg != null) {
@@ -195,6 +196,11 @@
           }
           polyvVideoModule.changeLevel({level:le++});
       }
+
+
+        function closeScreenCAP() {
+            polyvVideoModule.disableScreenCAP({disableScreenCAP:false});
+        }
     </script>
 </head>
 
@@ -221,6 +227,8 @@
     <a href="javascript:void(0);" onclick="hideMarquee()">隐藏跑马灯</a>
     <a href="javascript:void(0);" onclick="getCurLevel()">获取当前码率</a>
     <a href="javascript:void(0);" onclick="changeLevel()">改变码率</a>
+    <a href="javascript:void(0);" onclick="closeScreenCAP()">关闭防录屏</a>
+
     <br/>
     <label id="progress" style="color: #555555">0%</label>
 </body>
