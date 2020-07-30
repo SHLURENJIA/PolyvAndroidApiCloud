@@ -18,7 +18,7 @@
   <preference name="debug" value="true"/>
   <preference name="statusBarAppearance" value="true"/>
   <!-- 测试V8开启影响，开启后会apk会包含V8的so，体积增大，但是对于armeabi-v8架构的手机更能发挥性能 -->
-  <!-- <preference name="android_abi" value="arm64-v8a"/> -->
+  <preference name="android_abi" value="arm64-v8a"/>
   <permission name="readPhoneState"/>
   <permission name="camera"/>
   <permission name="record"/>
