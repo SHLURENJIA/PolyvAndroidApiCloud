@@ -4,7 +4,7 @@ function VideoFrame(options) {
   this.videoHeight = options.videoHeight;
   this.levels = null;
   this.level = 0;
-  this.vid = '6a83c6abfc7724f65dd66f2ce35ba804_6';
+  this.vid = 'e97dbe3e64c318bd1d82e21585304cbf_e';
 }
 
 VideoFrame.prototype = {
@@ -18,9 +18,11 @@ VideoFrame.prototype = {
   initDom: function () {
     const domSelect = {
       $playBtn: '.play-btn',
+      $closeBtn: '.close-btn',
       $configWrap: '.config-wrap',
       $changeVidWrap: '.change-vid-wrap',
       $changeVidBtn: '.change-btn',
+      $changeVidBtn02: '.change-btn02',
       $changeVidIpt: '.change-vid',
       $pathIpt: '.local-path',
       $vidIpt: '.video-vid',
@@ -91,13 +93,25 @@ VideoFrame.prototype = {
     var that = this;
     that.$playBtn.addEventListener('click', function () {
       that.newPlayer();
-      that.$configWrap.className += ' hide';
+      // that.$configWrap.className += ' hide';
       that.$changeVidWrap.className += ' show';
+    });
+    that.$closeBtn.addEventListener('click', function () {
+      console.log('关闭播放器')
+      that.polyvVideo.close();
     });
 
     that.$changeVidBtn.addEventListener('click', function() {
       that.polyvVideo.setVid({
         vid: that.$changeVidIpt.value
+      });
+    });
+    that.$changeVidBtn02.addEventListener('click', function () {
+      // that.polyvVideo.setPath({
+      //   path: that.$pathIpt.value
+      // });
+      that.polyvVideo.setVid({
+        vid: that.$pathIpt.value
       });
     });
 
@@ -112,19 +126,22 @@ VideoFrame.prototype = {
     var params = {
       rect: that.getRect(),
       level: that.level,
-      autoPlay: that.$autoPlaySwitch.checked ? true : false,
+      autoPlay: false,
       fixed: that.$fixedSwitch.checked ? true : false,
       seekType: that.$seekTypeSwitch.checked ? 1 : 0,
       disableScreenCAP: that.$disableScreenCAPSwitch.checked ? true : false,
-      vid: forceVid || that.$vidIpt.value,
-      path: that.$pathIpt.value
+      // vid: forceVid || that.$vidIpt.value,
+      path: that.$pathIpt.value,
     };
 
     this.polyvVideo.open(params, function (ret, err) {
+      console.log('eventType:'+ret.eventType)
       if (err) console.log(err);
       that.send(ret.eventType);
-
       if (ret.eventType === 'show') {
+//        setTimeout(function(){
+//          that.polyvVideo.start();
+//        },1000)
         that.initController();
         setInterval(function () {
           that.updateProgress();
@@ -133,6 +150,7 @@ VideoFrame.prototype = {
 
       that.send('addGesture', true);
     });
+    
   },
 
   getLevels: function () {
@@ -153,12 +171,13 @@ VideoFrame.prototype = {
     api.openFrame({
       name: 'controller',
       url: './video/controller.html',
-      rect: isLandscape ? {
-        x:  0,
-        y: 0,
-        w: "auto",
-        h: _h
-      }: that.getRect(),
+      // rect: isLandscape ? {
+      //   x:  0,
+      //   y: 0,
+      //   w: "auto",
+      //   h: _h
+      // }: that.getRect(),
+      rect:that.getRect(),
       pageParam: {
         levels: that.levels,
         level: that.level
@@ -287,7 +306,8 @@ VideoFrame.prototype = {
   getRect(forHeight) {
     return {
       x: 0,
-      y: 84,
+      // y: 84,
+      y: api.winHeight - this.videoHeight-100,
       w: 'auto',
       h: forHeight ? forHeight : this.videoHeight
     }
@@ -304,7 +324,8 @@ VideoFrame.prototype = {
     api.setFrameAttr({
       name: 'controller'
     }, {
-      rect: that.getRect(height)
+      // rect: that.getRect(height)
+      rect: that.getRect()
     });
   }
 
@@ -312,12 +333,14 @@ VideoFrame.prototype = {
 
 function apiready() {
   var polyvVideo, polyvVideoInfo, videoFrame;
-  var videoHeight = api.winWidth * 0.5625;
+  var videoHeight = api.winWidth * 0.5625 -100;
 
   // 获取polyvVideoModule模块
   polyvVideo = api.require('polyvVideoModule');
   polyvVideoInfo = api.require('polyvVideoInfoModule');
 
+  polyvVideo.close();
+  
   // 页面播放配置
   videoFrame = new VideoFrame({
     polyvVideo: polyvVideo,

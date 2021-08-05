@@ -21,8 +21,11 @@
     margin-top: 10px;
 }
 
-.video-frame-wrap .play-btn {
+.video-frame-wrap .play-btn,
+.video-frame-wrap .close-btn{
     position: relative;
+    display:inline-block;
+    vertical-align: middle;
     width: 150px;
     padding: 10px 35px;
     color: #fff;
@@ -53,7 +56,7 @@
 }
 
 .change-vid-wrap {
-    padding-top: 60%;
+    /* padding-top: 60%; */
     margin-left: 10px;
 }
 
